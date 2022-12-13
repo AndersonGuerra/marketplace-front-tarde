@@ -13,8 +13,11 @@ import {
 import * as Icon from "react-bootstrap-icons";
 import ItemTable from "../../components/ItemTable";
 import produtoService from "../../services/produto.service";
+import useAuth from "../../hooks/useAuth";
 
 export default function Produtos() {
+  useAuth();
+  
   const [data, setData] = useState([]);
 
   useEffect(() => {

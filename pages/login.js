@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import authService from "../services/auth.service";
+import { useAuthContext } from "../context/auth.context";
 
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useAuthContext();
 
-  function handleLogin(e) {
+  if (isAuthenticated) {
+    router.push("/categorias");
+  }
+
+  async function handleLogin(e) {
     e.preventDefault();
     // TODO: Lógica de login para o sistema
     /*
@@ -16,7 +26,16 @@ export default function Login() {
         3.2. Se a req. estiver ok, 
             salva o token e vai para proxima pagina
     */
-    router.push("/categorias");
+    try {
+      await authService.login({
+        email,
+        password,
+      });
+      setIsAuthenticated(true);
+      router.push("/categorias");
+    } catch (erro) {
+      alert("Falha ao autenticar, por favor tente novamente");
+    }
   }
 
   return (
@@ -31,6 +50,8 @@ export default function Login() {
                 type="email"
                 placeholder="Insira o seu e-mail"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="p-2">
@@ -40,6 +61,8 @@ export default function Login() {
                 placeholder="Insira a sua senha"
                 required
                 minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="p-2 text-center">
