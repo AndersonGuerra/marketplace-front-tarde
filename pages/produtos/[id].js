@@ -27,7 +27,12 @@ export default function DetalhesProduto() {
               <strong>Categoria</strong>
               <p>{data.category}</p>
               <strong>Preço</strong>
-              <p>R$ {data.price},99</p>
+              <p>
+                {data.price.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
               <strong>Criado em</strong>
               <p>{data.createdAt}</p>
               <Col>

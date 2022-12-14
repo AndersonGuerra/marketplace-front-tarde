@@ -14,7 +14,17 @@ export default {
       image: "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
       name: data.name,
       category: data.category,
-      price: data.price,
+      price: parseFloat(data.price),
+      createdAt: new Date().toLocaleString(),
+    });
+    return resultado.data;
+  },
+  async updateProduto(data, id) {
+    const resultado = await api.put(`/products/${id}`, {
+      image: "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+      name: data.name,
+      category: data.category,
+      price: parseFloat(data.price),
       createdAt: new Date().toLocaleString(),
     });
     return resultado.data;

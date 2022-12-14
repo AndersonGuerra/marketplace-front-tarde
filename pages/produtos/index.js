@@ -17,7 +17,7 @@ import useAuth from "../../hooks/useAuth";
 
 export default function Produtos() {
   useAuth();
-  
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -45,7 +45,12 @@ export default function Produtos() {
             </Link>
           </Col>
         </Row>
-        <ItemTable data={data} header={header} detailLink="produtos" />
+        <ItemTable
+          data={data}
+          header={header}
+          detailLink="produtos"
+          editLink="produtos/editar"
+        />
       </Card>
     </>
   );
